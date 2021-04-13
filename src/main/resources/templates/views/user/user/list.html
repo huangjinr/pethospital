@@ -141,7 +141,20 @@
               
               //提交 Ajax 成功后，静态更新表格中的数据
               //$.ajax({});
-              table.reload('LAY-user-front-submit'); //数据刷新
+              $.ajax({
+                type : "post",
+                /*contentType: "application/json;charset=UTF-8",*/
+                url:"/user/insertUser",
+                data:field,
+                async: false,
+                success: function (data) {
+                  layer.msg("添加成功");
+                },
+                error: function (e) {
+                  layer.msg("添加失败");
+                }
+              })
+              table.reload('LAY-user-manage'); //数据刷新
               layer.close(index); //关闭弹层
             });  
             

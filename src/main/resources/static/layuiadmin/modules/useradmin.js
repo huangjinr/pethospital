@@ -16,39 +16,48 @@ layui.define(['table', 'form'], function(exports){
   //用户管理
   table.render({
     elem: '#LAY-user-manage'
-    ,url: layui.setter.base + 'json/useradmin/webuser.js' //模拟接口
-    ,cols: [[
+    , url: '/user/selectUserList' //模拟接口
+    , cols: [[
       {type: 'checkbox', fixed: 'left'}
-      ,{field: 'id', width: 100, title: 'ID', sort: true}
-      ,{field: 'username', title: '用户名', minWidth: 100}
-      ,{field: 'avatar', title: '头像', width: 100, templet: '#imgTpl'}
-      ,{field: 'phone', title: '手机'}
-      ,{field: 'email', title: '邮箱'}
-      ,{field: 'sex', width: 80, title: '性别'}
-      ,{field: 'ip', title: 'IP'}
-      ,{field: 'jointime', title: '加入时间', sort: true}
-      ,{title: '操作', width: 150, align:'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
+      , {field: 'name', title: '姓名', width: '15%'}
+      , {field: 'phone', title: '手机', width: '15%'}
+      , {field: 'sex', width: '10%', title: '性别',templet:function (d) {
+          if(d.sex == 1){
+            return '男'
+          }else if(d.sex == 2) {
+            return '女'
+          }
+        }}
+      , {field: 'role.name', width: '10%', title: '角色',templet:function (d) {
+          return d.role.name
+        }}
+      , {field: 'address', width: '30%', title: '地址'}
+      , {title: '操作', width: '15%', align: 'center', fixed: 'right', toolbar: '#table-useradmin-webuser'}
     ]]
-    ,page: true
-    ,limit: 30
-    ,height: 'full-220'
-    ,text: '对不起，加载出现异常！'
+    , page: false
+    , limit: 30
+    , height: 'full-220'
+    , text: '对不起，加载出现异常！'
   });
   
   //监听工具条
   table.on('tool(LAY-user-manage)', function(obj){
     var data = obj.data;
     if(obj.event === 'del'){
-      layer.prompt({
-        formType: 1
-        ,title: '敏感操作，请验证口令'
-      }, function(value, index){
-        layer.close(index);
-        
-        layer.confirm('真的删除行么', function(index){
-          obj.del();
-          layer.close(index);
+      layer.confirm('真的删除吗', function (index) {
+        $.ajax({
+          url: "/user/deleteUserById?id="+data.id,
+          type: "get",
+          async: false,
+          success: function (data) {
+            layer.msg("删除成功");
+          },
+          error: function (data) {
+            layer.msg("删除失败");
+          }
         });
+        table.reload('LAY-user-manage');
+        layer.close(index);
       });
     } else if(obj.event === 'edit'){
       var tr = $(obj.tr);
@@ -56,7 +65,7 @@ layui.define(['table', 'form'], function(exports){
       layer.open({
         type: 2
         ,title: '编辑用户'
-        ,content: '../../../views/user/user/userform.html'
+        ,content: '/user/updateUserIndex?id=' + data.id
         ,maxmin: true
         ,area: ['500px', '450px']
         ,btn: ['确定', '取消']
@@ -71,7 +80,20 @@ layui.define(['table', 'form'], function(exports){
             
             //提交 Ajax 成功后，静态更新表格中的数据
             //$.ajax({});
-            table.reload('LAY-user-front-submit'); //数据刷新
+            $.ajax({
+              type: "post",
+              /*contentType: "application/json;charset=UTF-8",*/
+              url: "/user/updateUser",
+              data: field,
+              async: false,
+              success: function (data) {
+                layer.msg("编辑成功");
+              },
+              error: function (e) {
+                layer.msg("编辑失败");
+              }
+            })
+            table.reload('LAY-user-manage');
             layer.close(index); //关闭弹层
           });  
           

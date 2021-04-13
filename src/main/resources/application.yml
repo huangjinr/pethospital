@@ -5,7 +5,7 @@ spring:
   resources:
     static-locations: classpath:/static/, classpath:/templates/
   datasource:
-    url: jdbc:mysql://101.200.251.91:3306/pet-hospital?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&allowMultiQueries=true&useAffectedRows=true
+    url: jdbc:mysql://101.200.251.91:3306/pet_hospital?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8&allowMultiQueries=true&useAffectedRows=true
     username: huangjin
     password: QQhj0528
     driver-class-name: com.mysql.cj.jdbc.Driver
