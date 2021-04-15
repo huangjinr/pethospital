@@ -5,4 +5,95 @@
     <select id="selectDrugList" resultType="cn.lxp.pethospital.model.Drug">
         select * from drug where is_del = 0
     </select>
+
+    <insert id="insertDrug" parameterType="cn.lxp.pethospital.model.Drug">
+        insert into drug
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="drugName != null" >
+                drug_name,
+            </if>
+            <if test="drugPrice != null" >
+                drug_price,
+            </if>
+            <if test="drugSize != null" >
+                drug_size,
+            </if>
+            <if test="drugDetail != null" >
+                drug_detail,
+            </if>
+            <if test="drugImage != null" >
+                drug_image,
+            </if>
+            <if test="drugType != null" >
+                drug_type,
+            </if>
+            <if test="isDel != null" >
+                is_del,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="drugName != null" >
+                #{drugName},
+            </if>
+            <if test="drugPrice != null" >
+                #{drugPrice},
+            </if>
+            <if test="drugSize != null" >
+                #{drugSize},
+            </if>
+            <if test="drugDetail != null" >
+                #{drugDetail},
+            </if>
+            <if test="drugImage != null" >
+                #{drugImage},
+            </if>
+            <if test="drugType != null" >
+                #{drugType},
+            </if>
+            <if test="isDel != null" >
+                #{isDel},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectDrugById" parameterType="java.lang.String" resultType="cn.lxp.pethospital.model.Drug">
+        select * from drug where id = #{id} and is_del = 0
+    </select>
+
+    <update id="updateDrug" parameterType="cn.lxp.pethospital.model.Drug">
+        update drug
+        <set >
+            <if test="drugName != null" >
+                drug_name = #{drugName},
+            </if>
+            <if test="drugPrice != null" >
+                drug_price = #{drugPrice},
+            </if>
+            <if test="drugSize != null" >
+                drug_size = #{drugSize},
+            </if>
+            <if test="drugDetail != null" >
+                drug_detail = #{drugDetail},
+            </if>
+            <if test="drugImage != null" >
+                drug_image = #{drugImage},
+            </if>
+            <if test="drugType != null" >
+                drug_type = #{drugType},
+            </if>
+        </set>
+        where id = #{id} and is_del = 0
+    </update>
+
+    <delete id="deleteDrugById" parameterType="java.lang.String">
+        update drug
+        set is_del = 1
+        where id = #{id}
+    </delete>
 </mapper>

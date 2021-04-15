@@ -10,4 +10,12 @@ import java.util.List;
 @Mapper
 public interface DrugMapper {
     public List<Drug> selectDrugList();
+
+    int insertDrug(Drug drug);
+
+    Drug selectDrugById(String id);
+
+    int updateDrug(Drug drug);
+
+    int deleteDrugById(String id);
 }

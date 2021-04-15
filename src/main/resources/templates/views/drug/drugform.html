@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8">
   <title>layuiAdmin 文章管理 iframe 框</title>
@@ -13,46 +13,58 @@
 <body>
 
   <div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
+    <input type="hidden" name="id" th:value="${drug?.id}">
     <div class="layui-form-item">
-      <label class="layui-form-label">文章标题</label>
+      <label class="layui-form-label">药品名</label>
       <div class="layui-input-inline">
-        <input type="text" name="title" lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
+        <input type="text" name="drugName" lay-verify="required" th:value="${drug?.drugName}" placeholder="请输入药品名" autocomplete="off" class="layui-input">
       </div>
     </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">发布人</label>
+      <label class="layui-form-label">药品价格</label>
       <div class="layui-input-inline">
-        <input type="text" name="author" lay-verify="required" placeholder="请输入号码" autocomplete="off" class="layui-input">
+        <input type="text" name="drugPrice" lay-verify="required" th:value="${drug?.drugPrice}" placeholder="请输入药品价格" autocomplete="off" class="layui-input">
       </div>
     </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">文章内容</label>
+      <label class="layui-form-label">药品库存</label>
       <div class="layui-input-inline">
-        <textarea name="content" lay-verify="required" style="width: 400px; height: 150px;" autocomplete="off" class="layui-textarea"></textarea>
+        <input type="text" name="drugSize" lay-verify="required" th:value="${drug?.drugSize}" placeholder="请输入药品库存" autocomplete="off" class="layui-input">
       </div>
     </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">标签</label>
+      <label class="layui-form-label">药瓶详情</label>
       <div class="layui-input-inline">
-        <select name="label" lay-verify="required">
-          <option value="">请选择标签</option>
-          <option value="美食">美食</option>
-          <option value="新闻">新闻</option>
-          <option value="八卦">八卦</option>
-          <option value="体育">体育</option>
-          <option value="音乐">音乐</option>
-        </select>
+        <textarea name="drugDetail" th:utext="${drug?.drugDetail}" lay-verify="required" style="width: 400px; height: 150px;" autocomplete="off" class="layui-textarea"></textarea>
       </div>
     </div>
     <div class="layui-form-item">
-      <label class="layui-form-label">发布状态</label>
+      <label class="layui-form-label">药瓶类型</label>
       <div class="layui-input-inline">
-        <input type="checkbox" lay-verify="required" lay-filter="status" name="status" lay-skin="switch" lay-text="已发布|待修改">
+        <input type="text" name="drugType" lay-verify="required" th:value="${drug?.drugType}" placeholder="请输入药品库存" autocomplete="off" class="layui-input">
       </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-card">
+        <div class="layui-card-header">药品图片上传</div>
+        <div class="layui-card-body">
+          <div class="layui-upload">
+            <button type="button" class="layui-btn" id="test-upload-normal">上传图片</button>
+            <div class="layui-upload-list">
+              <img class="layui-upload-img" id="test-upload-normal-img" th:src="@{'/'+${drug.drugImage}}">
+              <p id="test-upload-demoText"></p>
+            </div>
+          </div>
+        </div>
+        <div class="layui-input-inline">
+          <input type="text" id="image" name="drugImage" th:value="${drug.drugImage}"  autocomplete="off"
+                 class="layui-input"></div>
+      </div>
+
     </div>
     <div class="layui-form-item layui-hide">
-      <input type="button" lay-submit lay-filter="layuiadmin-app-form-submit" id="layuiadmin-app-form-submit" value="确认添加">
-      <input type="button" lay-submit lay-filter="layuiadmin-app-form-edit" id="layuiadmin-app-form-edit" value="确认编辑">
+      <input type="button" lay-submit lay-filter="layuiadmin-drug-submit" id="layuiadmin-drug-submit" value="确认添加">
+      <input type="button" lay-submit lay-filter="layuiadmin-drug-edit" id="layuiadmin-drug-edit" value="确认编辑">
     </div>
   </div>
 
@@ -62,9 +74,37 @@
     base: '../../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'form'], function(){
+  }).use(['index', 'form', 'upload'], function(){
     var $ = layui.$
+    ,upload = layui.upload
     ,form = layui.form;
+
+    var uploadInst = upload.render({
+      elem: '#test-upload-normal'
+      ,url: '/upload'
+      ,before: function(obj){
+        //预读本地文件示例，不支持ie8
+        obj.preview(function(index, file, result){
+          $('#test-upload-normal-img').attr('src', result); //图片链接（base64）
+        });
+      }
+      ,done: function(res){
+        //如果上传失败
+        if(res.code > 0){
+          return layer.msg('上传失败');
+        }
+        //上传成功
+        $('#image').val(res.data)
+      }
+      ,error: function(){
+        //演示失败状态，并实现重传
+        var demoText = $('#test-upload-demoText');
+        demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-mini demo-reload">重试</a>');
+        demoText.find('.demo-reload').on('click', function(){
+          uploadInst.upload();
+        });
+      }
+    });
     
     //监听提交
     form.on('submit(layuiadmin-app-form-submit)', function(data){
