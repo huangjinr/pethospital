@@ -8,6 +8,8 @@ public class User {
     private Integer sex;
     private String phone;
     private String address;
+    private String animal;
+    private String animalName;
     private Integer isDel;
 
     private Role role;
@@ -68,6 +70,22 @@ public class User {
         this.address = address;
     }
 
+    public String getAnimal() {
+        return animal;
+    }
+
+    public void setAnimal(String animal) {
+        this.animal = animal;
+    }
+
+    public String getAnimalName() {
+        return animalName;
+    }
+
+    public void setAnimalName(String animalName) {
+        this.animalName = animalName;
+    }
+
     public Integer getIsDel() {
         return isDel;
     }
@@ -94,6 +112,8 @@ public class User {
                 ", sex=" + sex +
                 ", phone='" + phone + '\'' +
                 ", address='" + address + '\'' +
+                ", animal='" + animal + '\'' +
+                ", animalName='" + animalName + '\'' +
                 ", isDel=" + isDel +
                 ", role=" + role +
                 '}';
