@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lxp.pethospital.mapper.OrderMapper">
+
+    <resultMap id="selectOrderListMap" type="cn.lxp.pethospital.model.OrderDTO">
+        <id property="id" column="id"></id>
+        <result property="buyId" column="buy_id"></result>
+        <result property="userId" column="user_id"></result>
+        <result property="drugId" column="drug_id"></result>
+        <result property="orderSize" column="order_size"></result>
+        <result property="isDel" column="is_del"></result>
+        <association property="user" javaType="cn.lxp.pethospital.model.User">
+            <result property="name" column="name"></result>
+        </association>
+        <association property="drug" javaType="cn.lxp.pethospital.model.Drug">
+            <result property="drugName" column="drug_name"></result>
+            <result property="drugPrice" column="drug_price"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectOrderList" resultMap="selectOrderListMap">
+        SELECT
+            o.*, s.`name`,
+            d.drug_name,
+            d.drug_price
+        FROM
+            `order` o
+        LEFT JOIN sys_user s ON o.user_id = s.id
+        LEFT JOIN drug d ON o.drug_id = d.id
+        WHERE
+            o.is_del = 0
+    </select>
+</mapper>

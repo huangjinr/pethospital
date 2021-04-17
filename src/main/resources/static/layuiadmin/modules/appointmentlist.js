@@ -13,22 +13,30 @@ layui.define(['table', 'form'], function(exports){
   ,table = layui.table
   ,form = layui.form;
 
+  //文章管理
   table.render({
-    elem: '#LAY-laboratory-list'
-    ,url: '/laboratory/selectLaboratoryList' //模拟接口
+    elem: '#LAY-appointment-list'
+    ,url: '/appointment/selectAppointmentList' //模拟接口
     ,cols: [[
       {type: 'numbers', fixed: 'left'}
-      ,{field: 'user.name', width: '15%', title: '顾客姓名', templet:function (d) {
+      ,{field: 'user.name', width: '10%', title: '预约人姓名',templet:function (d) {
           return d.user.name
         }}
-      ,{field: 'user.animal', title: '宠物类型', width: '15%', templet:function (d) {
+      ,{field: 'user.animal', width: '10%', title: '预约人宠物类型',templet:function (d) {
           return d.user.animal
         }}
-      ,{field: 'user.animalName', title: '宠物姓名',width: '12.6%', templet:function (d) {
+      ,{field: 'user.animalName', width: '10%', title: '预约人宠物姓名',templet:function (d) {
           return d.user.animalName
         }}
-      ,{field: 'laboratoryReport', title: '化验结果',width: '30%'}
-      ,{field: 'laboratoryImage', title: '化验图片',width: '10%', templet: '<div><img width="70px" height="48px" src="/{{d.laboratoryImage}}"></div>'}
+      ,{field: 'appointmentTime', title: '预约时间', width: '10%'}
+      ,{field: 'isSuccessful', title: '预约是否成功',width: '10%',templet:function (d) {
+          if(d.isSuccessful == 1){
+            return '是'
+          }else if(d.isSuccessful == 0) {
+            return '否'
+          }
+        }}
+      ,{field: 'appointmentDetail', title: '预约详情',width: '32.6%'}
       ,{title: '操作', width: '15%', align: 'center', fixed: 'right', toolbar: '#table-content-list'}
     ]]
     ,page: false
@@ -36,12 +44,12 @@ layui.define(['table', 'form'], function(exports){
   });
   
   //监听工具条
-  table.on('tool(LAY-laboratory-list)', function(obj){
+  table.on('tool(LAY-appointment-list)', function(obj){
     var data = obj.data;
     if(obj.event === 'del'){
-      layer.confirm('真的删除行么', function (index) {
+      layer.confirm('真的删除么', function (index) {
         $.ajax({
-          url: "/laboratory/deleteLaboratoryById?id=" + data.id,
+          url: "/appointment/deleteAppointmentById?id=" + data.id,
           type: "get",
           async: false,
           success: function (data) {
@@ -51,23 +59,23 @@ layui.define(['table', 'form'], function(exports){
             layer.msg("删除失败");
           }
         });
-        table.reload('LAY-laboratory-list');
+        table.reload('LAY-appointment-list');
         layer.close(index);
       });
     } else if(obj.event === 'edit'){
       layer.open({
         type: 2
         ,title: '编辑文章'
-        ,content: '/laboratory/updateLaboratoryIndex?id='+ data.id
+        ,content: '/appointment/updateAppointmentIndex?id='+ data.id
         ,maxmin: true
         ,area: ['550px', '550px']
         ,btn: ['确定', '取消']
         ,yes: function(index, layero){
           var iframeWindow = window['layui-layer-iframe'+ index]
-          ,submit = layero.find('iframe').contents().find("#layuiadmin-laboratory-edit");
+          ,submit = layero.find('iframe').contents().find("#layuiadmin-appointment-edit");
 
           //监听提交
-          iframeWindow.layui.form.on('submit(layuiadmin-laboratory-edit)', function(data){
+          iframeWindow.layui.form.on('submit(layuiadmin-appointment-edit)', function(data){
             var field = data.field; //获取提交的字段
             
             //提交 Ajax 成功后，静态更新表格中的数据
@@ -76,7 +84,7 @@ layui.define(['table', 'form'], function(exports){
             $.ajax({
               type: "post",
               /*contentType: "application/json;charset=UTF-8",*/
-              url: "/laboratory/updateLaboratory",
+              url: "/appointment/updateAppointment",
               data: field,
               async: false,
               success: function (data) {
@@ -86,7 +94,7 @@ layui.define(['table', 'form'], function(exports){
                 layer.msg("编辑失败");
               }
             })
-            table.reload('LAY-laboratory-list'); //数据刷新
+            table.reload('LAY-appointment-list'); //数据刷新
             layer.close(index); //关闭弹层
           });  
           
@@ -97,5 +105,5 @@ layui.define(['table', 'form'], function(exports){
   });
 
 
-  exports('laboratorylist', {})
+  exports('appointmentlist', {})
 });
