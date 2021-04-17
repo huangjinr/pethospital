@@ -96,4 +96,8 @@
         set is_del = 1
         where id = #{id}
     </delete>
+
+    <select id="selectDrugByName" parameterType="java.lang.String" resultType="cn.lxp.pethospital.model.Drug">
+        select * from drug where drug_name = #{DrugName} and is_del = 0
+    </select>
 </mapper>

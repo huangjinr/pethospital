@@ -7,6 +7,7 @@ public class OrderDTO {
     private String userId;
     private String drugId;
     private Integer orderSize;
+    private Double orderPrice;
     private Integer isDel;
 
     private User user;
@@ -52,6 +53,14 @@ public class OrderDTO {
         this.orderSize = orderSize;
     }
 
+    public Double getOrderPrice() {
+        return orderPrice;
+    }
+
+    public void setOrderPrice(Double orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
     public Integer getIsDel() {
         return isDel;
     }
@@ -84,6 +93,7 @@ public class OrderDTO {
                 ", userId='" + userId + '\'' +
                 ", drugId='" + drugId + '\'' +
                 ", orderSize=" + orderSize +
+                ", orderPrice=" + orderPrice +
                 ", isDel=" + isDel +
                 ", user=" + user +
                 ", drug=" + drug +

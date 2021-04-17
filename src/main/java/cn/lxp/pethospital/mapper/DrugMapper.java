@@ -18,4 +18,6 @@ public interface DrugMapper {
     int updateDrug(Drug drug);
 
     int deleteDrugById(String id);
+
+    Drug selectDrugByName(String DrugName);
 }

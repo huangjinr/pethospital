@@ -8,9 +8,12 @@
         <result property="userId" column="user_id"></result>
         <result property="drugId" column="drug_id"></result>
         <result property="orderSize" column="order_size"></result>
+        <result property="orderPrice" column="order_price"></result>
         <result property="isDel" column="is_del"></result>
         <association property="user" javaType="cn.lxp.pethospital.model.User">
             <result property="name" column="name"></result>
+            <result property="animal" column="animal"></result>
+            <result property="animalName" column="animal_name"></result>
         </association>
         <association property="drug" javaType="cn.lxp.pethospital.model.Drug">
             <result property="drugName" column="drug_name"></result>
@@ -20,7 +23,7 @@
 
     <select id="selectOrderList" resultMap="selectOrderListMap">
         SELECT
-            o.*, s.`name`,
+            o.*, s.`name`,s.animal, s.animal_name,
             d.drug_name,
             d.drug_price
         FROM
@@ -30,4 +33,74 @@
         WHERE
             o.is_del = 0
     </select>
+
+    <insert id="insertOrder" parameterType="cn.lxp.pethospital.model.OrderDTO">
+        insert into `order`
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="buyId != null" >
+                buy_id,
+            </if>
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="drugId != null" >
+                drug_id,
+            </if>
+            <if test="orderSize != null" >
+                order_size,
+            </if>
+            <if test="orderPrice != null" >
+                order_price,
+            </if>
+            <if test="isDel != null" >
+                is_del,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id},
+            </if>
+            <if test="buyId != null" >
+                #{buyId},
+            </if>
+            <if test="userId != null" >
+                #{userId},
+            </if>
+            <if test="drugId != null" >
+                #{drugId},
+            </if>
+            <if test="orderSize != null" >
+                #{orderSize},
+            </if>
+            <if test="orderPrice != null" >
+                #{orderPrice},
+            </if>
+            <if test="isDel != null" >
+                #{isDel},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="selectOrderListByBuyId" resultMap="selectOrderListMap">
+        SELECT
+            o.*, s.`name`,s.animal, s.animal_name,
+            d.drug_name,
+            d.drug_price
+        FROM
+            `order` o
+        LEFT JOIN sys_user s ON o.user_id = s.id
+        LEFT JOIN drug d ON o.drug_id = d.id
+        WHERE
+            o.is_del = 0
+        AND o.buy_id = #{id}
+    </select>
+
+    <delete id="deleteOrderByBuyId" parameterType="java.lang.String">
+        update `order`
+        set is_del = 1
+        where buy_id = #{id}
+    </delete>
 </mapper>

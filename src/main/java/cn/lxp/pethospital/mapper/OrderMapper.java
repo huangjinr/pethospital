@@ -10,4 +10,10 @@ import java.util.List;
 @Mapper
 public interface OrderMapper {
     List<OrderDTO> selectOrderList();
+
+    int insertOrder(OrderDTO orderDTO);
+
+    List<OrderDTO> selectOrderListByBuyId(String id);
+
+    int deleteOrderByBuyId(String id);
 }

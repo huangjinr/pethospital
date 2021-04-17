@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lxp.pethospital.mapper.SaleMapper">
+
+    <resultMap id="selectSaleListMap" type="cn.lxp.pethospital.model.Sale">
+        <result property="drugId" column="drug_id"></result>
+        <result property="money" column="smoney"></result>
+        <result property="count" column="scount"></result>
+        <association property="drug" javaType="cn.lxp.pethospital.model.Drug">
+            <result property="drugName" column="drug_name"></result>
+        </association>
+    </resultMap>
+
+    <select id="selectSaleList" resultMap="selectSaleListMap">
+        SELECT
+            drug_id,
+            SUM(order_size) AS scount,
+            SUM(order_price) AS smoney,
+            d.drug_name
+        FROM
+            `order` o
+        LEFT JOIN drug d ON o.drug_id = d.id
+        WHERE
+            o.is_del = 0
+        GROUP BY
+            drug_id
+    </select>
+</mapper>
