@@ -131,4 +131,16 @@
     <select id="selectUserByName" parameterType="java.lang.String" resultType="cn.lxp.pethospital.model.User">
         select * from sys_user where name = #{name} and is_del = 0
     </select>
+
+    <select id="selectUserByUsername" parameterType="String" resultMap="selectUserListMap">
+        SELECT
+            s.*, sr.`name` AS role_name,
+            sr.role_type
+        FROM
+            `sys_user` s
+        LEFT JOIN sys_user_role sur ON s.id = sur.user_id
+        LEFT JOIN sys_role sr ON sur.role_id = sr.id
+        WHERE
+            username = #{username}
+    </select>
 </mapper>

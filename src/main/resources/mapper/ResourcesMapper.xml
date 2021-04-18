@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.lxp.pethospital.mapper.ResourcesMapper">
+
+    <select id="selectResourcesCodeByUserId" resultType="java.lang.String" parameterType="java.lang.String">
+        SELECT
+            sr.code
+        FROM
+            sys_user s
+        LEFT JOIN sys_user_role sur ON s.id = sur.user_id
+        LEFT JOIN sys_role_resources srr ON sur.role_id = srr.role_id
+        LEFT JOIN sys_resources sr ON srr.resource_id = sr.id
+        WHERE
+            s.id = #{id}
+    </select>
+
+</mapper>
