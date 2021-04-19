@@ -85,19 +85,29 @@ layui.define(['form', 'upload'], function(exports){
   
   //设置我的资料
   form.on('submit(setmyinfo)', function(obj){
-    layer.msg(JSON.stringify(obj.field));
+    /*layer.msg(JSON.stringify(obj.field));*/
     
     //提交修改
-    /*
-    admin.req({
-      url: ''
+    /*admin.req({
+      url: '/user/setUser'
       ,data: obj.field
       ,success: function(){
-        
+        layer.msg('修改成功')
       }
-    });
-    */
-    return false;
+    });*/
+    $.ajax({
+      type : "post",
+      /*contentType: "application/json;charset=UTF-8",*/
+      url: "/user/setUser",
+      data: obj.field,
+      async: false,
+      success: function (data) {
+        layer.msg("修改成功");
+      },
+      error: function (e) {
+        layer.msg("修改失败");
+      }
+    })
   });
 
   //上传头像
@@ -133,8 +143,7 @@ layui.define(['form', 'upload'], function(exports){
   
   //设置密码
   form.on('submit(setmypass)', function(obj){
-    layer.msg(JSON.stringify(obj.field));
-    
+
     //提交修改
     /*
     admin.req({
@@ -145,6 +154,24 @@ layui.define(['form', 'upload'], function(exports){
       }
     });
     */
+    $.ajax({
+      type : "post",
+      /*contentType: "application/json;charset=UTF-8",*/
+      url: "/user/updateUserPassword",
+      data: obj.field,
+      async: false,
+      success: function (data) {
+        if (data.state == "success"){
+          layer.msg("修改成功")
+        }
+        if (data.state == "error"){
+          layer.msg("修改失败");
+        }
+      },
+      error: function (e) {
+        layer.msg("修改失败");
+      }
+    })
     return false;
   });
   

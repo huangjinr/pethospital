@@ -3,6 +3,8 @@ package cn.lxp.pethospital.controller;
 import cn.lxp.pethospital.model.User;
 import cn.lxp.pethospital.service.UserService;
 import cn.lxp.pethospital.utils.ReturnUtil;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,9 +29,8 @@ public class UserController {
      */
     @GetMapping("selectUserList")
     @ResponseBody
-    public ModelMap selectUserList(){
-
-        List<User> userList = userService.selectUserList();
+    public ModelMap selectUserList(String name,String username,String phone){
+        List<User> userList = userService.selectUserList(name,username,phone);
         return ReturnUtil.Success("查询成功",userList);
     }
 
@@ -89,4 +90,50 @@ public class UserController {
             return ReturnUtil.Error("删除失败");
         }
     }
+
+    /**
+     * 返回设置用户我的界面
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("setUserIndex")
+    public String setUserIndex(String id, Model model){
+        Subject subject = SecurityUtils.getSubject();
+        User currentUser = (User)subject.getPrincipal();
+        User user = userService.selectUserById(currentUser.getId());
+        model.addAttribute("user",user);
+        return "views/set/user/info";
+    }
+
+    @RequestMapping("setUser")
+    @ResponseBody
+    public ModelMap setUser(User user){
+        int count = userService.setUser(user);
+        if (count > 0) {
+            return ReturnUtil.Success("修改成功");
+        } else {
+            return ReturnUtil.Error("操作失败");
+        }
+    }
+
+    @RequestMapping("updateUserPassword")
+    @ResponseBody
+    public ModelMap updateUserPassword(String oldPassword,String password){
+        Subject subject = SecurityUtils.getSubject();
+        User currentUser = (User)subject.getPrincipal();
+        if(!currentUser.getPassword().equals(oldPassword)){
+            return ReturnUtil.Error("操作失败");
+        }
+        User user = new User();
+        user.setId(currentUser.getId());
+        user.setPassword(password);
+        int count = userService.updateUserPassword(user);
+        if (count > 0) {
+            return ReturnUtil.Success("修改成功");
+        } else {
+            return ReturnUtil.Error("操作失败");
+        }
+    }
+
 }

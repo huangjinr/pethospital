@@ -21,8 +21,8 @@ public class SaleController {
 
     @GetMapping("selectSaleList")
     @ResponseBody
-    public ModelMap selectSaleList(){
-        List<Sale> saleList = saleService.selectSaleList();
+    public ModelMap selectSaleList(String drugName){
+        List<Sale> saleList = saleService.selectSaleList(drugName);
         return ReturnUtil.Success("查询成功",saleList);
     }
 }

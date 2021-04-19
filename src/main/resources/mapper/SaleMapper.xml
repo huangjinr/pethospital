@@ -11,7 +11,7 @@
         </association>
     </resultMap>
 
-    <select id="selectSaleList" resultMap="selectSaleListMap">
+    <select id="selectSaleList" resultMap="selectSaleListMap" parameterType="java.util.Map">
         SELECT
             drug_id,
             SUM(order_size) AS scount,
@@ -22,6 +22,9 @@
         LEFT JOIN drug d ON o.drug_id = d.id
         WHERE
             o.is_del = 0
+        <if test="drugName != null and drugName != ''">
+            and d.drug_name = #{drugName}
+        </if>
         GROUP BY
             drug_id
     </select>

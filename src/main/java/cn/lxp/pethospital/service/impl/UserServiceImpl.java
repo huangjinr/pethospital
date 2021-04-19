@@ -7,10 +7,14 @@ import cn.lxp.pethospital.mapper.UserRoleMapper;
 import cn.lxp.pethospital.model.User;
 import cn.lxp.pethospital.model.UserRole;
 import cn.lxp.pethospital.service.UserService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -25,8 +29,24 @@ public class UserServiceImpl implements UserService {
     private UserRoleMapper userRoleMapper;
 
     @Override
-    public List<User> selectUserList() {
-        return userMapper.selectUserList();
+    public List<User> selectUserList(String name,String username,String phone) {
+        Map<String, Object> map = new HashMap<>();
+        Subject subject = SecurityUtils.getSubject();
+        User currentUser = (User)subject.getPrincipal();
+        if (currentUser.getRole().getRoleType() != 1){
+            map.put("roleType",2);
+            //map.put("id",currentUser.getId());
+        }
+        if (name != null && !"".equals(name)){
+            map.put("name",name);
+        }
+        if (username != null && !"".equals(username)){
+            map.put("username",username);
+        }
+        if (phone != null && !"".equals(phone)){
+            map.put("phone",phone);
+        }
+        return userMapper.selectUserList(map);
     }
 
     @Override
@@ -67,5 +87,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public User selectUserByUsername(String username) {
         return userMapper.selectUserByUsername(username);
+    }
+
+    @Override
+    public int setUser(User user) {
+        return userMapper.updateUser(user);
+    }
+
+    @Override
+    public int updateUserPassword(User user) {
+        return userMapper.updateUser(user);
     }
 }

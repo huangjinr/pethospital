@@ -5,5 +5,5 @@ import cn.lxp.pethospital.model.Sale;
 import java.util.List;
 
 public interface SaleService {
-    List<Sale> selectSaleList();
+    List<Sale> selectSaleList(String drugName);
 }

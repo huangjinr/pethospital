@@ -1,7 +1,7 @@
 
 
 <!DOCTYPE html>
-<html>
+<html xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
 <head>
   <meta charset="utf-8">
   <title>layuiAdmin std - 通用后台管理模板系统（iframe标准版）</title>
@@ -68,11 +68,11 @@
           </li>
           <li class="layui-nav-item" lay-unselect>
             <a href="javascript:;">
-              <cite>贤心</cite>
+              <cite>设置</cite>
             </a>
             <dl class="layui-nav-child">
-              <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-              <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+              <dd><a lay-href="/user/setUserIndex">基本资料</a></dd>
+              <dd><a lay-href="/views/set/user/password.html">修改密码</a></dd>
               <hr>
               <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
             </dl>
@@ -390,7 +390,7 @@
                 </dd>
               </dl>
             </li>
-            <li data-name="user" class="layui-nav-item">
+            <li data-name="user" class="layui-nav-item" shiro:hasPermission="sys:drug">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
                 <cite>药品管理</cite>
@@ -412,7 +412,7 @@
                 </dd>
               </dl>
             </li>
-            <li data-name="user" class="layui-nav-item">
+            <li data-name="user" class="layui-nav-item" shiro:hasPermission="sys:order">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
                 <cite>订单管理</cite>
@@ -434,7 +434,7 @@
                 </dd>
               </dl>
             </li>
-            <li data-name="user" class="layui-nav-item">
+            <li data-name="user" class="layui-nav-item" shiro:hasPermission="sys:earning">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
                 <cite>收入管理</cite>
@@ -448,20 +448,14 @@
                 </dd>
               </dl>
             </li>
-            <li data-name="user" class="layui-nav-item">
+            <li data-name="user" class="layui-nav-item" shiro:hasPermission="sys:user">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
                 <cite>用户</cite>
               </a>
               <dl class="layui-nav-child">
                 <dd>
-                  <a lay-href="/views/user/user/list.html">网站用户</a>
-                </dd>
-                <dd>
-                  <a lay-href="user/administrators/list.html">后台管理员</a>
-                </dd>
-                <dd>
-                  <a lay-href="user/administrators/role.html">角色管理</a>
+                  <a lay-href="/views/user/user/list.html">用户信息管理</a>
                 </dd>
               </dl>
             </li>
