@@ -28,8 +28,8 @@ public class LaboratoryController {
      */
     @GetMapping("selectLaboratoryList")
     @ResponseBody
-    public ModelMap selectLaboratoryList(){
-        List<Laboratory> laboratoryList = laboratoryService.selectLaboratoryList();
+    public ModelMap selectLaboratoryList(String name,String animalName){
+        List<Laboratory> laboratoryList = laboratoryService.selectLaboratoryList(name,animalName);
         return ReturnUtil.Success("查询成功",laboratoryList);
     }
 

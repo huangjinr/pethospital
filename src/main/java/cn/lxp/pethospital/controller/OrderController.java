@@ -28,8 +28,8 @@ public class OrderController {
      */
     @GetMapping("selectOrderList")
     @ResponseBody
-    public ModelMap selectOrderList(){
-        List<OrderVO> orderVOList = orderService.selectOrderList();
+    public ModelMap selectOrderList(String orderId,String name,String animalName){
+        List<OrderVO> orderVOList = orderService.selectOrderList(orderId,name,animalName);
         return ReturnUtil.Success("查询成功",orderVOList);
     }
 

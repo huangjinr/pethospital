@@ -5,7 +5,7 @@ import cn.lxp.pethospital.model.Appointment;
 import java.util.List;
 
 public interface AppointmentService {
-    List<Appointment> selectAppointmentList();
+    List<Appointment> selectAppointmentList(String name,Integer isSuccessful);
 
     int insertAppointment(Appointment appointment);
 

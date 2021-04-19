@@ -5,7 +5,7 @@ import cn.lxp.pethospital.model.Laboratory;
 import java.util.List;
 
 public interface LaboratoryService {
-    List<Laboratory> selectLaboratoryList();
+    List<Laboratory> selectLaboratoryList(String name,String animalName);
 
     int insertLaboratory(Laboratory laboratory);
 

@@ -16,7 +16,7 @@
         </association>
     </resultMap>
 
-    <select id="selectAppointmentList" resultMap="selectAppointmentListMap">
+    <select id="selectAppointmentList" resultMap="selectAppointmentListMap" parameterType="java.util.Map">
         SELECT
             a.*, s.`name`, s.animal, s.animal_name
         FROM
@@ -24,6 +24,12 @@
         LEFT JOIN sys_user s ON a.user_id = s.id
         WHERE
             a.is_del = 0
+        <if test="name != null and name != ''">
+            and s.name = #{name}
+        </if>
+        <if test="isSuccessful != null">
+            and a.is_successful = #{isSuccessful}
+        </if>
     </select>
 
     <insert id="insertAppointment" parameterType="cn.lxp.pethospital.model.Appointment">

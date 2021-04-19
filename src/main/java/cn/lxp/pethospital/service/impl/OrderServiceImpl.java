@@ -9,11 +9,15 @@ import cn.lxp.pethospital.model.OrderDTO;
 import cn.lxp.pethospital.model.OrderVO;
 import cn.lxp.pethospital.model.User;
 import cn.lxp.pethospital.service.OrderService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -28,8 +32,23 @@ public class OrderServiceImpl implements OrderService {
     private DrugMapper drugMapper;
 
     @Override
-    public List<OrderVO> selectOrderList() {
-        List<OrderDTO> orderDTOList = orderMapper.selectOrderList();
+    public List<OrderVO> selectOrderList(String orderId,String name,String animalName) {
+        Map<String, Object> map = new HashMap<>();
+        Subject subject = SecurityUtils.getSubject();
+        User currentUser = (User)subject.getPrincipal();
+        if (name != null && !"".equals(name)){
+            map.put("name",name);
+        }
+        if (orderId != null && !"".equals(orderId)){
+            map.put("orderId",orderId);
+        }
+        if (animalName != null && !"".equals(animalName)){
+            map.put("animalName",animalName);
+        }
+        if (currentUser.getRole().getRoleType() == 2){
+            map.put("userId",currentUser.getId());
+        }
+        List<OrderDTO> orderDTOList = orderMapper.selectOrderList(map);
         List<OrderVO> orderVOList = new ArrayList<>();
         for (OrderDTO orderDTO : orderDTOList) {
             Boolean flag = true;

@@ -19,10 +19,11 @@ layui.define(['table', 'form'], function(exports){
     ,url: '/order/selectOrderList' //模拟接口
     ,cols: [[
       {type: 'numbers', fixed: 'left'}
+      ,{field: 'id', width: '16%', title: '订单编号'}
       ,{field: 'userName', width: '10%', title: '订单顾客名称'}
       ,{field: 'animal', title: '宠物类别',width: '10%'}
       ,{field: 'animalName', title: '宠物姓名',width: '10%'}
-      ,{field: 'drugName', title: '订单药品名称', width: '35%'}
+      ,{field: 'drugName', title: '订单药品名称', width: '25%'}
       ,{field: 'totalPrice', title: '总价格',width: '10%'}
       ,{title: '操作', width: '15%', align: 'center', fixed: 'right', toolbar: '#table-content-list'}
     ]]

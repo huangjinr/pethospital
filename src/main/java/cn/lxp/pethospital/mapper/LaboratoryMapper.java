@@ -5,11 +5,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @Mapper
 public interface LaboratoryMapper {
-    List<Laboratory> selectLaboratoryList();
+    List<Laboratory> selectLaboratoryList(Map<String,Object> map);
 
     int insertLaboratory(Laboratory laboratory);
 

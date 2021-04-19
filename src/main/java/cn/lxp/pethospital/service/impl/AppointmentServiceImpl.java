@@ -9,7 +9,9 @@ import cn.lxp.pethospital.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AppointmentServiceImpl implements AppointmentService {
@@ -21,8 +23,15 @@ public class AppointmentServiceImpl implements AppointmentService {
     private UserMapper userMapper;
 
     @Override
-    public List<Appointment> selectAppointmentList() {
-        return appointmentMapper.selectAppointmentList();
+    public List<Appointment> selectAppointmentList(String name,Integer isSuccessful) {
+        Map<String, Object> map = new HashMap<>();
+        if (name != null && !"".equals(name)){
+            map.put("name",name);
+        }
+        if (name != null){
+            map.put("isSuccessful",isSuccessful);
+        }
+        return appointmentMapper.selectAppointmentList(map);
     }
 
     @Override

@@ -16,7 +16,7 @@
     </resultMap>
 
 
-    <select id="selectLaboratoryList" resultMap="selectLaboratoryListMap">
+    <select id="selectLaboratoryList" resultMap="selectLaboratoryListMap" parameterType="java.util.Map">
         SELECT
             l.*, s.`name`,
             s.animal_name,
@@ -26,6 +26,12 @@
         LEFT JOIN sys_user s ON l.user_id = s.id
         WHERE
             l.is_del = 0
+        <if test="name != null and name != ''">
+            and s.name = #{name}
+        </if>
+        <if test="animalName != null and animalName != ''">
+            and s.animal_name = #{animalName}
+        </if>
     </select>
 
     <insert id="insertLaboratory" parameterType="cn.lxp.pethospital.model.Laboratory">

@@ -9,7 +9,9 @@ import cn.lxp.pethospital.service.LaboratoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LaboratoryServiceImpl implements LaboratoryService {
@@ -21,8 +23,15 @@ public class LaboratoryServiceImpl implements LaboratoryService {
     private UserMapper userMapper;
 
     @Override
-    public List<Laboratory> selectLaboratoryList() {
-        return laboratoryMapper.selectLaboratoryList();
+    public List<Laboratory> selectLaboratoryList(String name,String animalName) {
+        Map<String, Object> map = new HashMap<>();
+        if (name != null && !"".equals(name)){
+            map.put("name",name);
+        }
+        if (animalName != null && !"".equals(animalName)){
+            map.put("animalName",animalName);
+        }
+        return laboratoryMapper.selectLaboratoryList(map);
     }
 
     @Override

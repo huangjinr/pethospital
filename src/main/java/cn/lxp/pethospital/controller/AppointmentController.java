@@ -28,8 +28,8 @@ public class AppointmentController {
      */
     @GetMapping("selectAppointmentList")
     @ResponseBody
-    public ModelMap selectLaboratoryList(){
-        List<Appointment> appointmentList = appointmentService.selectAppointmentList();
+    public ModelMap selectLaboratoryList(String name,Integer isSuccessful){
+        List<Appointment> appointmentList = appointmentService.selectAppointmentList(name,isSuccessful);
         return ReturnUtil.Success("查询成功",appointmentList);
     }
 
