@@ -112,7 +112,7 @@
                 </dd>
               </dl>
             </li>
-            <li data-name="component" class="layui-nav-item">
+            <!--<li data-name="component" class="layui-nav-item">
               <a href="javascript:;" lay-tips="组件" lay-direction="2">
                 <i class="layui-icon layui-icon-component"></i>
                 <cite>组件</cite>
@@ -389,7 +389,7 @@
                   </dl>
                 </dd>
               </dl>
-            </li>
+            </li>-->
             <li data-name="user" class="layui-nav-item" shiro:hasPermission="sys:drug">
               <a href="javascript:;" lay-tips="用户" lay-direction="2">
                 <i class="layui-icon layui-icon-user"></i>
@@ -509,7 +509,7 @@
         </div>
         <div class="layui-tab" lay-unauto lay-allowClose="true" lay-filter="layadmin-layout-tabs">
           <ul class="layui-tab-title" id="LAY_app_tabsheader">
-            <li lay-id="home/console.html" lay-attr="home/console.html" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
+            <li lay-id="/views/home/console.html" lay-attr="home/console.html" class="layui-this"><i class="layui-icon layui-icon-home"></i></li>
           </ul>
         </div>
       </div>
@@ -518,7 +518,7 @@
       <!-- 主体内容 -->
       <div class="layui-body" id="LAY_app_body">
         <div class="layadmin-tabsbody-item layui-show">
-          <iframe src="home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
+          <iframe src="/views/home/console.html" frameborder="0" class="layadmin-iframe"></iframe>
         </div>
       </div>
       
