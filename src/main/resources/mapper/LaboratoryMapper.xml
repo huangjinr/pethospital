@@ -32,6 +32,9 @@
         <if test="animalName != null and animalName != ''">
             and s.animal_name = #{animalName}
         </if>
+        <if test="userId != null and userId != ''">
+            and s.id = #{userId}
+        </if>
     </select>
 
     <insert id="insertLaboratory" parameterType="cn.lxp.pethospital.model.Laboratory">

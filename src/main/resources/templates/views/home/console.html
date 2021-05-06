@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="../../layuiadmin/style/admin.css" media="all">
 </head>
 <body>
-  
   <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
       <div class="layui-col-md8">
@@ -28,37 +27,37 @@
                       <li class="layui-col-xs3">
                         <a lay-href="home/homepage1.html">
                           <i class="layui-icon layui-icon-console"></i>
-                          <cite>主页一</cite>
+                          <cite>药品管理</cite>
                         </a>
                       </li>
                       <li class="layui-col-xs3">
                         <a lay-href="home/homepage2.html">
                           <i class="layui-icon layui-icon-chart"></i>
-                          <cite>主页二</cite>
+                          <cite>化验管理</cite>
                         </a>
                       </li>
                       <li class="layui-col-xs3">
                         <a lay-href="component/layer/list.html">
                           <i class="layui-icon layui-icon-template-1"></i>
-                          <cite>弹层</cite>
+                          <cite>订单管理</cite>
                         </a>
                       </li>
                       <li class="layui-col-xs3">
                         <a layadmin-event="im">
                           <i class="layui-icon layui-icon-chat"></i>
-                          <cite>聊天</cite>
+                          <cite>预约管理</cite>
                         </a>
                       </li>
                       <li class="layui-col-xs3">
                         <a lay-href="component/progress/index.html">
                           <i class="layui-icon layui-icon-find-fill"></i>
-                          <cite>进度条</cite>
+                          <cite>收入管理</cite>
                         </a>
                       </li>
                       <li class="layui-col-xs3">
                         <a lay-href="app/workorder/list.html">
                           <i class="layui-icon layui-icon-survey"></i>
-                          <cite>工单</cite>
+                          <cite>用户管理</cite>
                         </a>
                       </li>
                       <li class="layui-col-xs3">
@@ -74,7 +73,7 @@
                         </a>
                       </li>
                     </ul>
-                    <ul class="layui-row layui-col-space10">
+                    <!--<ul class="layui-row layui-col-space10">
                       <li class="layui-col-xs3">
                         <a lay-href="set/user/info.html">
                           <i class="layui-icon layui-icon-set"></i>
@@ -123,7 +122,7 @@
                           <cite>我的资料</cite>
                         </a>
                       </li>
-                    </ul>
+                    </ul>-->
                     
                   </div>
                 </div>
@@ -189,10 +188,13 @@
                     <div></div>
                   </div>
                 </div>
+
                 
               </div>
+
             </div>
-            <div class="layui-card">
+
+            <!--<div class="layui-card">
               <div class="layui-tab layui-tab-brief layadmin-latestData">
                 <ul class="layui-tab-title">
                   <li class="layui-this">今日热搜</li>
@@ -207,7 +209,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
@@ -286,7 +288,7 @@
           </div>
         </div>
         
-        <div class="layui-card">
+        <!--<div class="layui-card">
           <div class="layui-card-header">产品动态</div>
           <div class="layui-card-body">
             <div class="layui-carousel layadmin-carousel layadmin-news" data-autoplay="true" data-anim="fade" lay-filter="news">
@@ -297,9 +299,9 @@
               </div>
             </div>
           </div>
-        </div>
+        </div>-->
 
-        <div class="layui-card">
+        <!--<div class="layui-card">
           <div class="layui-card-header">
             作者心语
             <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
@@ -311,7 +313,7 @@
             <p>—— 贤心（<a href="http://www.layui.com/" target="_blank">layui.com</a>）</p>
           </div>
         </div>
-      </div>
+      </div>-->
       
     </div>
   </div>
@@ -322,7 +324,26 @@
     base: '../../layuiadmin/' //静态资源所在路径
   }).extend({
     index: 'lib/index' //主入口模块
-  }).use(['index', 'console']);
+  }).use(['index', 'console','carousel'],function(){
+    var carousel = layui.carousel,$ = layui.$;
+    //建造实例
+    carousel.render({
+      elem: '#test1'
+      ,width: '100%' //设置容器宽度
+      ,arrow: 'always'
+      ,height:'auto'
+      //,anim: 'updown' //切换动画方式
+    });
+    $('.app-header-menuicon').on('click',function(){
+      $('.header-down-nav').toggleClass('down-nav')
+    })
+    var imgH = $('.imgbox div.layui-this').outerHeight();
+    $('.imgH').css('height',imgH+'px')
+    window.onresize = function () {
+      var imgH = $('.imgbox div.layui-this').outerHeight();
+      $('.imgH').css('height',imgH+'px')
+    };
+  })
   </script>
 </body>
 </html>

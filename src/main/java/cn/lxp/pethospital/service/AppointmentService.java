@@ -14,4 +14,8 @@ public interface AppointmentService {
     int updateAppointment(Appointment appointment);
 
     int deleteAppointmentById(String id);
+
+    int insertCustomerAppointment(Appointment appointment);
+
+    int appointmentSuccess(String id);
 }

@@ -8,6 +8,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -34,6 +35,15 @@ public class LoginController {
             e.printStackTrace();
             return null;
         }
+    }
 
+    @GetMapping("logout")
+    @ResponseBody
+    public ModelMap logout(){
+        Subject subject = SecurityUtils.getSubject();
+        if (subject.isAuthenticated()){
+            subject.logout();
+        }
+        return ReturnUtil.Success("操作成功");
     }
 }

@@ -6,6 +6,8 @@ import cn.lxp.pethospital.mapper.UserMapper;
 import cn.lxp.pethospital.model.Laboratory;
 import cn.lxp.pethospital.model.User;
 import cn.lxp.pethospital.service.LaboratoryService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +26,17 @@ public class LaboratoryServiceImpl implements LaboratoryService {
 
     @Override
     public List<Laboratory> selectLaboratoryList(String name,String animalName) {
+        Subject subject = SecurityUtils.getSubject();
+        User currentUser = (User)subject.getPrincipal();
         Map<String, Object> map = new HashMap<>();
         if (name != null && !"".equals(name)){
             map.put("name",name);
         }
         if (animalName != null && !"".equals(animalName)){
             map.put("animalName",animalName);
+        }
+        if (currentUser.getRole().getRoleType() == 2){
+            map.put("userId",currentUser.getId());
         }
         return laboratoryMapper.selectLaboratoryList(map);
     }

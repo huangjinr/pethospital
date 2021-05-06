@@ -50,6 +50,23 @@ public class AppointmentController {
         }
     }
 
+
+    /**
+     * 添加顾客预约
+     *
+     * @param appointment
+     * @return
+     */
+    @PostMapping("insertCustomerAppointment")
+    @ResponseBody
+    public ModelMap insertCustomerAppointment(Appointment appointment) {
+        int count = appointmentService.insertCustomerAppointment(appointment);
+        if (count > 0) {
+            return ReturnUtil.Success("添加成功");
+        } else {
+            return ReturnUtil.Error("添加失败");
+        }
+    }
     /**
      * 返回编辑预约界面
      *
@@ -92,6 +109,17 @@ public class AppointmentController {
     @ResponseBody
     public ModelMap deleteAppointmentById(String id) {
         int count = appointmentService.deleteAppointmentById(id);
+        if (count > 0) {
+            return ReturnUtil.Success("删除成功");
+        } else {
+            return ReturnUtil.Error("删除失败");
+        }
+    }
+
+    @GetMapping("appointmentSuccess")
+    @ResponseBody
+    public ModelMap appointmentSuccess(String id){
+        int count = appointmentService.appointmentSuccess(id);
         if (count > 0) {
             return ReturnUtil.Success("删除成功");
         } else {

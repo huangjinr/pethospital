@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:shiro="http://www.thymeleaf.org/thymeleaf-extras-shiro">
 <head>
   <meta charset="utf-8">
   <title>layuiAdmin 内容系统 - 文章列表</title>
@@ -23,7 +23,7 @@
 
 <div class="layui-fluid">
   <div class="layui-card">
-    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto" shiro:hasAnyRoles="ROLE_ADMIN,ROLE_DOCTOR">
       <div class="layui-form-item">
         <div class="layui-inline">
           <label class="layui-form-label">顾客姓名</label>
@@ -47,12 +47,12 @@
     </div>
 
     <div class="layui-card-body">
-      <div style="padding-bottom: 10px;">
+      <div style="padding-bottom: 10px;" shiro:hasAnyRoles="ROLE_ADMIN,ROLE_DOCTOR">
         <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
         <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
       </div>
       <table id="LAY-laboratory-list" lay-filter="LAY-laboratory-list"></table>
-      <script type="text/html" id="table-content-list">
+      <script type="text/html" id="table-content-list" shiro:hasAnyRoles="ROLE_ADMIN,ROLE_DOCTOR">
         <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
       </script>

@@ -42,7 +42,9 @@ public class UserRealm extends AuthorizingRealm {
             set.addAll(resourcesCodeList);
         }
         simpleAuthorizationInfo.setStringPermissions(set);
-
+        HashSet<String> RolesSet = new HashSet<>();
+        RolesSet.add(currentUser.getRole().getNameEn());
+        simpleAuthorizationInfo.setRoles(RolesSet);
         return simpleAuthorizationInfo;
     }
 

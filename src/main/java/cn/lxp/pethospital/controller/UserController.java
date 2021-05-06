@@ -44,7 +44,7 @@ public class UserController {
     public ModelMap insertUser(User user){
         int count = userService.insertUser(user);
         if (count > 0) {
-            return ReturnUtil.Success("修改成功");
+            return ReturnUtil.Success("操作成功");
         } else {
             return ReturnUtil.Error("操作失败");
         }

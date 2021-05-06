@@ -36,8 +36,8 @@ layui.define(['table', 'form'], function(exports){
             return '否'
           }
         }}
-      ,{field: 'appointmentDetail', title: '预约详情',width: '32.6%'}
-      ,{title: '操作', width: '15%', align: 'center', fixed: 'right', toolbar: '#table-content-list'}
+      ,{field: 'appointmentDetail', title: '预约详情',width: '25.6%'}
+      ,{title: '操作', width: '25%', align: 'center', fixed: 'right', toolbar: '#table-content-list'}
     ]]
     ,page: false
     ,text: '对不起，加载出现异常！'
@@ -100,6 +100,22 @@ layui.define(['table', 'form'], function(exports){
           
           submit.trigger('click');
         }
+      });
+    } else if(obj.event === 'appointment'){
+      layer.confirm('确定预约成功吗', function (index) {
+        $.ajax({
+          url: "/appointment/appointmentSuccess?id=" + data.id,
+          type: "get",
+          async: false,
+          success: function (data) {
+            layer.msg("预约成功");
+          },
+          error: function (data) {
+            layer.msg("预约失败");
+          }
+        });
+        table.reload('LAY-appointment-list');
+        layer.close(index);
       });
     }
   });

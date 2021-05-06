@@ -19,4 +19,6 @@ public interface AppointmentMapper {
     int updateAppointment(Appointment appointment);
 
     int deleteAppointmentById(String id);
+
+    int appointmentSuccess(String id);
 }

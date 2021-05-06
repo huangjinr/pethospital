@@ -24,6 +24,9 @@
         LEFT JOIN sys_user s ON a.user_id = s.id
         WHERE
             a.is_del = 0
+        <if test="userId != null and userId != ''">
+            and a.user_id = #{userId}
+        </if>
         <if test="name != null and name != ''">
             and s.name = #{name}
         </if>
@@ -111,4 +114,8 @@
         set is_del = 1
         where id = #{id}
     </delete>
+
+    <update id="appointmentSuccess" parameterType="java.lang.String">
+        update appointment set is_successful = 1 where id = #{id}
+    </update>
 </mapper>

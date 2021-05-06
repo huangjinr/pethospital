@@ -1,7 +1,8 @@
-package cn.lxp.pethospital.service;
+package cn.lxp.pethospital.service.impl;
 
 import cn.lxp.pethospital.mapper.SaleMapper;
 import cn.lxp.pethospital.model.Sale;
+import cn.lxp.pethospital.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
